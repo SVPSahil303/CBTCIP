@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Number Guessing Game</title>
+    <link rel="stylesheet" th:href="@{/css/styles.css}">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+</head>
+<body>
+<div class="container">
+    <h1>Number Guessing Game</h1>
+    <p th:text="${game.isGuessed} ? 'Congratulations! You guessed the number!' : (${game.isLost} ? 'You lost! Try again.' : 'Guess the number between 0 and 100')"></p>
+    <div th:if="${game.isAllowed}">
+        <form th:action="@{/guess}" method="post">
+            <input type="number" name="guess" min="0" max="100" required>
+            <button type="submit">Guess</button>
+        </form>
+        <p th:if="${message != null}" th:text="${message}"></p>
+        <div>
+            <p>Attempts: <span th:text="${game.attempts}"></span> / <span th:text="${game.maxAttemptes}"></span></p>
+            <p>Best Score: <span th:text="${game.bestScore}"></span></p>
+        </div>
+    </div>
+    <div class="start-new-game">
+        <form th:action="@{/}" method="get">
+            <button type="submit">Start New Game</button>
+        </form>
+    </div>
+</div>
+</body>
+</html>
