@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Register</title>
+    <link rel="stylesheet" type="text/css" href="/css/styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+</head>
+<body>
+<nav>
+    <div>
+        <a th:href="@{/}">BANKY</a>
+    </div>
+    <div class="nav-buttons">
+        <a th:href="@{/logout}">Logout</a>
+    </div>
+</nav>
+<div class="container">
+    <h1>Register</h1>
+    <form action="#" th:action="@{/register}" method="post">
+        <label for="username">Username:</label>
+        <input type="text" id="username" name="username" required>
+        <label for="password">Password:</label>
+        <input type="password" id="password" name="password" required>
+        <label for="ownerName">Owner Name:</label>
+        <input type="text" id="ownerName" name="ownerName" required>
+        <button type="submit">Register</button>
+    </form>
+</div>
+</body>
+</html>

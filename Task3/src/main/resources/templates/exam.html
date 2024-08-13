@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Online Examination</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet">
+    <link href="/css/common.css" rel="stylesheet">
+    <style>
+        .timer {
+            font-size: 24px;
+            font-weight: bold;
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+<body>
+<div class="animated-bg"></div>
+<nav class="navbar">
+    <a th:href="@{/profile}">Edit Profile</a>
+    <a th:href="@{/exam}">Exam</a>
+    <a th:href="@{/logout}">Logout</a>
+</nav>
+<div class="container mt-5 pt-5">
+    <div class="timer" id="timer">Time Remaining: <span id="time">10:00</span></div> <!-- Add the timer display here -->
+    <h2>Exam</h2>
+    <form id="examForm" th:action="@{/submitExam}" method="post" th:object="${answersWrapper}">
+        <div th:each="question, iterStat : ${questions}">
+            <h5 th:text="${iterStat.count + '. ' + question.text}"></h5>
+            <input type="hidden" th:field="*{answers[__${iterStat.index}__].questionId}" th:value="${question.id}"/>
+            <div th:each="option, optionStat : ${question.options}">
+                <div class="form-check">
+                    <input class="form-check-input" type="radio"
+                           th:field="*{answers[__${iterStat.index}__].selectedAnswer}"
+                           th:value="${option}" th:id="${'question' + iterStat.index + '_option' + optionStat.index}">
+                    <label class="form-check-label" th:for="${'question' + iterStat.index + '_option' + optionStat.index}" th:text="${option}"></label>
+                </div>
+            </div>
+        </div>
+        <button type="submit" class="btn btn-primary mt-3">Submit</button>
+    </form>
+</div>
+
+<script>
+    window.onload = function() {
+        var timer = 600; // 10 minutes in seconds
+        var display = document.getElementById('time');
+        var examForm = document.getElementById('examForm');
+
+        function startTimer(duration, display) {
+            var timer = duration, minutes, seconds;
+            var interval = setInterval(function() {
+                minutes = parseInt(timer / 60, 10);
+                seconds = parseInt(timer % 60, 10);
+
+                minutes = minutes < 10 ? "0" + minutes : minutes;
+                seconds = seconds < 10 ? "0" + seconds : seconds;
+
+                display.textContent = minutes + ":" + seconds;
+
+                if (--timer < 0) {
+                    clearInterval(interval);
+                    examForm.submit(); // Automatically submit the form when the timer ends
+                }
+            }, 1000);
+        }
+
+        startTimer(timer, display);
+    };
+</script>
+</body>
+</html>

@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Account Details</title>
+    <link rel="stylesheet" type="text/css" href="/css/styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+</head>
+<body>
+<nav>
+    <div>
+        <a th:href="@{/}">BANKY</a>
+    </div>
+    <div class="nav-buttons">
+        <a th:href="@{/{id}/deposit(id=${account.id})}">Deposit</a>
+        <a th:href="@{/{id}/withdraw(id=${account.id})}">Withdraw</a>
+        <a th:href="@{/{id}/transfer(id=${account.id})}">Transfer</a>
+        <a th:href="@{/logout}">Logout</a>
+    </div>
+</nav>
+<div class="container">
+    <h1>Account Details</h1>
+    <div>
+        <p>ID: <span th:text="${account.id}"></span></p>
+        <p>Owner Name: <span th:text="${account.ownerName}"></span></p>
+        <p>Balance: <span th:text="${account.balance}"></span></p>
+    </div>
+    <div>
+        <h2>Transactions</h2>
+        <table>
+            <thead>
+            <tr>
+                <th>Type</th>
+                <th>Amount</th>
+                <th>Date</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="transaction : ${account.transactions}">
+                <td th:text="${transaction.type}"></td>
+                <td th:text="${transaction.amount}"></td>
+                <td th:text="${transaction.date}"></td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+</body>
+</html>

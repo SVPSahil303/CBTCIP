@@ -1,0 +1,18 @@
+body {
+    background: linear-gradient(to right, #141e30, #243b55);
+    color: #ffffff;
+}
+
+.navbar-brand, .nav-link {
+    color: #ffffff !important;
+}
+
+.card {
+    background-color: #1c1f24;
+    color: #ffffff;
+}
+
+.btn-primary {
+    background-color: #4e73df;
+    border: none;
+}
